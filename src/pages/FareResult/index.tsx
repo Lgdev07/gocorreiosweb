@@ -4,10 +4,7 @@ import './styles.css'
 
 import logoImg from '../../assets/images/logo.svg'
 import backIcon from '../../assets/images/icons/back.svg'
-import { Link, useHistory } from 'react-router-dom'
-import Input from '../../components/Input'
-import Select from '../../components/Select';
-import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom'
 
 interface FareProps {
   location: {
@@ -24,17 +21,10 @@ interface FareProps {
 }
 
 const FareResult: React.FC<FareProps> = ({ location }) => {
-  const history = useHistory()
-  const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data: FareProps) => {
-    console.log(data);
-    console.log('passei aqui');
-    history.push('/')
-  }
-  console.log(errors);
+
   useEffect(() => {
     console.log(location.state);
-  }, [])
+  }, [location.state])
 
   return (
     <div id="fare-result" className="container">
