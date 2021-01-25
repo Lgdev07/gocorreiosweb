@@ -1,0 +1,61 @@
+#fare-result{
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem;
+}
+
+#fare-result .logo-container .text {
+  font: 700 4rem Lato;
+  margin: 1rem 0;
+}
+
+#fare-result .logo-container {
+  text-align: center;
+  margin: 5rem 0;
+}
+
+#fare-result .logo-container img {
+  height: 7rem;
+}
+
+#fare-result .logo-container #back-icon {
+  height: 3rem;
+  float: left;
+}
+
+#fare-result footer p {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+#fare-result footer p a {
+  text-decoration: none;
+  color: var(--color-input);
+}
+
+.result-container {
+  border-radius: 2rem;
+  text-align: center;
+  background: var(--color-input);
+  padding: 1rem;
+}
+
+.result-value {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10rem;
+  color: var(--color-background);
+  font: 700 2rem Lato;
+  margin: 2rem 0;
+}
+
+.separator {
+  width: calc(100% - 0.2rem);
+  height: 2px;
+  content: '';
+  background: var(--color-button-main-darker);
+}
+
+.observations p + p {
+  font-size: 15px;
+}
