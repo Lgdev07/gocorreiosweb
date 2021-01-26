@@ -65,12 +65,12 @@ const FareResult: React.FC<FareProps> = ({ location }) => {
         <div className="separator" />
         <div className="result-value">
           <p>Entrega em casa</p>
-          <p>{deliver_home == "N" ? "Não" : "Sim"}</p>
+          <p>{deliver_home === "N" ? "Não" : "Sim"}</p>
         </div>
         <div className="separator" />
         <div className="result-value">
           <p>Entrega aos sábados</p>
-          <p>{deliver_saturday == "N" ? "Não" : "Sim"}</p>
+          <p>{deliver_saturday === "N" ? "Não" : "Sim"}</p>
         </div>
         <div className="separator" />
         <div className="result-value observations">
