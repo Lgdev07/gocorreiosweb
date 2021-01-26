@@ -8,6 +8,7 @@ import { Link, useHistory } from 'react-router-dom'
 import Input from '../../components/Input'
 import Select from '../../components/Select';
 import { useForm } from 'react-hook-form';
+import api from '../../services/api'
 
 interface FareProps {
   service: string
@@ -22,10 +23,13 @@ interface FareProps {
 const FareCalculation: React.FC = () => {
   const history = useHistory()
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data: FareProps) => {
-    console.log(data);
-    console.log('passei aqui');
-    history.push('/fare-result', data)
+  const onSubmit = async (data: FareProps) => {
+    try {
+      const result = await api.post('/fares', data)
+      history.push('/fare-result', result.data)
+    } catch {
+      alert("Erro ao calcular, tente novamente")
+    }
   }
   console.log(errors);
 

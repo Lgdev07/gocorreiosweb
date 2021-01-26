@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import './styles.css'
 
@@ -9,21 +9,31 @@ import { Link } from 'react-router-dom'
 interface FareProps {
   location: {
     state: {
+      days_for_delivery: string
+      deliver_home: string
+      deliver_saturday: string
+      obs: string
+      price: string
       service: string
-      cep_origin: string
-      cep_destination: string
-      weight: string
-      lenght: string
-      height: string
-      width: string
     }
   }
 }
 
 const FareResult: React.FC<FareProps> = ({ location }) => {
+  const [daysForDelivery, setDaysForDelivery] = useState('')
+  const [deliver_home, setDeliverHome] = useState('')
+  const [deliver_saturday, setDeliverSaturday] = useState('')
+  const [obs, setObs] = useState('')
+  const [price, setPrice] = useState('')
+  const [service, setService] = useState('')
 
   useEffect(() => {
-    console.log(location.state);
+    setDaysForDelivery(location.state.days_for_delivery)
+    setDeliverHome(location.state.deliver_home)
+    setDeliverSaturday(location.state.deliver_saturday)
+    setObs(location.state.obs)
+    setPrice(location.state.price)
+    setService(location.state.service)
   }, [location.state])
 
   return (
@@ -40,32 +50,32 @@ const FareResult: React.FC<FareProps> = ({ location }) => {
       <div className="result-container">
         <div className="result-value">
           <p>Preço</p>
-          <p>R$ 400,40</p>
+          <p>R$ {price}</p>
         </div>
         <div className="separator" />
         <div className="result-value">
           <p>Serviço</p>
-          <p>SEDEX</p>
+          <p>{service}</p>
         </div>
         <div className="separator" />
         <div className="result-value">
           <p>Dias para entrega</p>
-          <p>2</p>
+          <p>{daysForDelivery}</p>
         </div>
         <div className="separator" />
         <div className="result-value">
           <p>Entrega em casa</p>
-          <p>Sim</p>
+          <p>{deliver_home == "N" ? "Não" : "Sim"}</p>
         </div>
         <div className="separator" />
         <div className="result-value">
           <p>Entrega aos sábados</p>
-          <p>Não</p>
+          <p>{deliver_saturday == "N" ? "Não" : "Sim"}</p>
         </div>
         <div className="separator" />
         <div className="result-value observations">
           <p>Observações</p>
-          <p>O CEP de destino está sujeito a condições especiais de entrega  pela  ECT e será realizada com o acréscimo de até 7 (sete) dias úteis ao prazo regular.</p>
+          <p>{obs}</p>
         </div>
       </div>
       <footer>
