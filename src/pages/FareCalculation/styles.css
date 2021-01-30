@@ -27,6 +27,13 @@
   float: left;
 }
 
+#fare-calculation .loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 30%;
+  margin-bottom: auto;
+}
+
 #fare-calculation .bottom-input {
   display: grid;
   grid-template-columns: 1fr 1fr;
