@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Loader from 'react-loader-spinner'
 
 import './styles.css'
 
@@ -23,8 +24,11 @@ interface FareProps {
 const FareCalculation: React.FC = () => {
   const history = useHistory()
   const { register, handleSubmit, errors } = useForm();
+  const [loading, setLoading] = useState(false);
+
   const onSubmit = async (data: FareProps) => {
     try {
+      setLoading(true)
       const result = await api.post('/fares', data)
       history.push('/fare-result', result.data)
     } catch {
@@ -44,7 +48,13 @@ const FareCalculation: React.FC = () => {
         <p className="text">Calculo de Frete</p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {loading &&
+        <div className="loading">
+          <Loader type="ThreeDots" color="#fbd700" height="100" width="100" />
+        </div>}
+
+      {!loading &&
+      < form onSubmit={handleSubmit(onSubmit)}>
       <Select
         name="service"
         label="Serviço"
@@ -104,12 +114,13 @@ const FareCalculation: React.FC = () => {
         />
       </div>
       <footer>
-      <button type="submit">
-        Consultar
+        <button type="submit">
+          Consultar
       </button>
-      <p>Feito por <a href="https://github.com/Lgdev07"><b>Luan Gomes</b></a></p>
+        <p>Feito por <a href="https://github.com/Lgdev07"><b>Luan Gomes</b></a></p>
       </footer>
       </form>
+      }
     </div>
   )
 }
