@@ -32,6 +32,7 @@ const FareCalculation: React.FC = () => {
       const result = await api.post('/fares', data)
       history.push('/fare-result', result.data)
     } catch {
+      setLoading(false)
       alert("Erro ao calcular, tente novamente")
     }
   }
