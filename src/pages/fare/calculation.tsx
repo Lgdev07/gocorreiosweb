@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
 import Loader from 'react-loader-spinner'
 
-import './styles.css'
+import styles from './Calculation.module.css'
 
-import logoImg from '../../assets/images/logo.svg'
-import backIcon from '../../assets/images/icons/back.svg'
-import { Link, useHistory } from 'react-router-dom'
 import Input from '../../components/Input'
 import Select from '../../components/Select';
 import { useForm } from 'react-hook-form';
 import api from '../../services/api'
+import Head from 'next/head'
 
 interface FareProps {
   service: string
@@ -21,8 +22,8 @@ interface FareProps {
   width: string
 }
 
-const FareCalculation: React.FC = () => {
-  const history = useHistory()
+const Calculation = () => {
+  const router = useRouter()
   const { register, handleSubmit, errors } = useForm();
   const [loading, setLoading] = useState(false);
 
@@ -30,27 +31,34 @@ const FareCalculation: React.FC = () => {
     try {
       setLoading(true)
       const result = await api.post('/fares', data)
-      history.push('/fare-result', result.data)
+      router.push({
+        pathname: '/fare/result',
+        query: result.data
+      })
     } catch {
       setLoading(false)
       alert("Erro ao calcular, tente novamente")
     }
   }
-  console.log(errors);
 
   return (
-    <div id="fare-calculation" className="container">
-      <div className="logo-container">
-        <Link to="/">
-          <img src={backIcon} id="back-icon" alt="Back" />
+    <div className={`${styles.fare_calculation} container`}>
+      <Head>
+        <title>GoCorreios - Cálculo de Frete</title>
+      </Head>
+      <div className={styles.logo_container}>
+        <Link href="/">
+          <a>
+            <img src='../assets/images/icons/back.svg' className={styles.back_icon} alt="Back" />
+          </a>
         </Link>
 
-        <img src={logoImg} alt="GoCorreios" />
-        <p className="text">Calculo de Frete</p>
+        <img src='../assets/images/logo.svg' alt="GoCorreios" />
+        <p className={styles.text}>Cálculo de Frete</p>
       </div>
 
       {loading &&
-        <div className="loading">
+        <div className={styles.loading}>
           <Loader type="ThreeDots" color="#fbd700" height="100" width="100" />
         </div>}
 
@@ -80,7 +88,7 @@ const FareCalculation: React.FC = () => {
         required
       />
 
-      <div className="bottom-input">
+      <div className={styles.bottom_input}>
         <Input
           name="weight"
           label="Peso(em Kg)"
@@ -126,4 +134,4 @@ const FareCalculation: React.FC = () => {
   )
 }
 
-export default FareCalculation
+export default Calculation

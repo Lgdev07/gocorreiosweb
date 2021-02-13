@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 
-import './styles.css';
+import styles from './Input.module.css'
 
 type RefReturn =
   | string
@@ -17,7 +17,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: React.FC<InputProps> = ({ label, name, register, required, ...rest }) => {
   return (
-    <div className="input-block">
+    <div className={styles.input_block}>
       <label htmlFor={name}>{label}</label>
       <input name={name} ref={register({ required })} type="text" id={name} {...rest} />
     </div>

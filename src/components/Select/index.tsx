@@ -1,5 +1,7 @@
-import React, { SelectHTMLAttributes, useState } from 'react';
-import './styles.css';
+import { NextPage } from 'next';
+import { SelectHTMLAttributes, useState } from 'react';
+
+import styles from './Select.module.css'
 
 type RefReturn =
   | string
@@ -18,11 +20,11 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   }>;
 }
 
-const Select: React.FC<SelectProps> = ({ label, register, required, name, options, ...rest }) => {
+const Select: NextPage<SelectProps> = ({ label, register, required, name, options, ...rest }) => {
   const [value, setValue] = useState('')
 
   return (
-    <div className="select-block">
+    <div className={styles.select_block}>
       <label htmlFor={name}>{label}</label>
       <select name={name} ref={register({ required })} onChange={(e) => setValue(e.target.value)} value={value} id={name} {...rest}>
         {options.map(option => {
