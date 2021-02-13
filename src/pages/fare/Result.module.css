@@ -1,46 +1,47 @@
-#fare-result{
+.fare_result{
   width: 100vw;
   height: 100vh;
   padding: 2rem;
 }
 
-#fare-result .logo-container .text {
+.fare_result .logo_container .text {
   font: 700 4rem Lato;
   margin: 1rem 0;
 }
 
-#fare-result .logo-container {
+.fare_result .logo_container {
   text-align: center;
   margin: 5rem 0;
 }
 
-#fare-result .logo-container img {
+.fare_result .logo_container img {
   height: 7rem;
 }
 
-#fare-result .logo-container #back-icon {
+.fare_result .logo_container .back_icon {
   height: 3rem;
   float: left;
+  cursor: pointer;
 }
 
-#fare-result footer p {
+.fare_result footer p {
   text-align: center;
   margin: 2rem 0;
 }
 
-#fare-result footer p a {
+.fare_result footer p a {
   text-decoration: none;
   color: var(--color-input);
 }
 
-.result-container {
+.result_container {
   border-radius: 2rem;
   text-align: center;
   background: var(--color-input);
   padding: 1rem;
 }
 
-.result-value {
+.result_value {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 10rem;

@@ -28,7 +28,7 @@ body {
   background: var(--color-background);
 }
 
-#root {
+#__next {
   display: flex;
   align-items: center;
   justify-content: center;
