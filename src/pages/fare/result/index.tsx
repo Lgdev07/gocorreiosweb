@@ -32,9 +32,15 @@ const FareResult: NextPage<FareProps> = ({ query }) => {
   const handleShare = async () => {
     if (navigator.share) {
       navigator.share({
-        title: 'web.dev',
-        text: 'Check out web.dev.',
-        url: 'https://web.dev/',
+        title: 'Resultado Frete',
+        text: `
+          Preço: ${query.price}
+          Serviço: ${query.service}
+          Dias para entrega: ${query.days_for_delivery}
+          Entrega em casa: ${query.deliver_home}
+          Entrega aos sábados: ${query.deliver_saturday}
+          Observações: ${query.obs}
+        `
       })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing', error));
@@ -63,9 +69,10 @@ const FareResult: NextPage<FareProps> = ({ query }) => {
         <img src='../assets/images/logo.svg' alt="GoCorreios" />
         <p className={styles.text}>Calculo de Frete - Resultado</p>
       </div>
-      <button onClick={handleShare}>
-        Compartilhar Whatsapp
-      </button>
+      {navigator.share &&
+        <button className={styles.button_share} onClick={handleShare}>
+          Compartilhar
+        </button>}
       <div className={styles.result_container}>
         <div className={styles.result_value}>
           <p>Preço</p>
