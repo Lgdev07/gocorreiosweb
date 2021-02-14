@@ -6,10 +6,10 @@ import Loader from 'react-loader-spinner'
 
 import styles from './Calculation.module.css'
 
-import Input from '../../components/Input'
-import Select from '../../components/Select';
+import Input from '../../../components/Input'
+import Select from '../../../components/Select';
 import { useForm } from 'react-hook-form';
-import api from '../../services/api'
+import api from '../../../services/api'
 import Head from 'next/head'
 
 interface FareProps {

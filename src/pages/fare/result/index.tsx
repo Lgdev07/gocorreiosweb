@@ -29,6 +29,18 @@ const FareResult: NextPage<FareProps> = ({ query }) => {
   const [price, setPrice] = useState('')
   const [service, setService] = useState('')
 
+  const handleShare = async () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'web.dev',
+        text: 'Check out web.dev.',
+        url: 'https://web.dev/',
+      })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+    }
+  }
+
   useEffect(() => {
     setDaysForDelivery(query.days_for_delivery)
     setDeliverHome(query.deliver_home)
@@ -51,7 +63,9 @@ const FareResult: NextPage<FareProps> = ({ query }) => {
         <img src='../assets/images/logo.svg' alt="GoCorreios" />
         <p className={styles.text}>Calculo de Frete - Resultado</p>
       </div>
-
+      <button onClick={handleShare}>
+        Compartilhar Whatsapp
+      </button>
       <div className={styles.result_container}>
         <div className={styles.result_value}>
           <p>Preço</p>
