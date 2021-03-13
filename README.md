@@ -27,7 +27,6 @@
 </p>
 
 ## ✅ Features
-- [x] PWA Support
 - [x] Web Share Result
 - [x] Fare Calculation
 
