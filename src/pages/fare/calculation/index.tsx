@@ -31,9 +31,9 @@ const Calculation = () => {
     try {
       setLoading(true)
       const result = await api.post('/fares', data)
+      localStorage.setItem('fareResult', JSON.stringify(result.data))
       router.push({
-        pathname: '/fare/result',
-        query: result.data
+        pathname: '/fare/result'
       })
     } catch {
       setLoading(false)

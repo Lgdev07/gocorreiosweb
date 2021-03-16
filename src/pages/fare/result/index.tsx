@@ -6,22 +6,16 @@ import { NextRouter, withRouter } from 'next/router'
 import styles from './Result.module.css'
 import Head from 'next/head'
 
-interface WithRouterProps {
-  router: NextRouter
+interface FareProps {
+  days_for_delivery: string
+  deliver_home: string
+  deliver_saturday: string
+  obs: string
+  price: string
+  service: string
 }
 
-interface FareProps extends WithRouterProps {
-  query: {
-    days_for_delivery: string
-    deliver_home: string
-    deliver_saturday: string
-    obs: string
-    price: string
-    service: string
-  }
-}
-
-const FareResult: NextPage<FareProps> = ({ query }) => {
+const FareResult: NextPage<FareProps> = () => {
   const [daysForDelivery, setDaysForDelivery] = useState('')
   const [deliver_home, setDeliverHome] = useState('')
   const [deliver_saturday, setDeliverSaturday] = useState('')
@@ -34,12 +28,12 @@ const FareResult: NextPage<FareProps> = ({ query }) => {
       navigator.share({
         title: 'Resultado Frete',
         text: `
-          Preço: ${query.price}
-          Serviço: ${query.service}
-          Dias para entrega: ${query.days_for_delivery}
-          Entrega em casa: ${query.deliver_home}
-          Entrega aos sábados: ${query.deliver_saturday}
-          Observações: ${query.obs}
+          Preço: ${price}
+          Serviço: ${service}
+          Dias para entrega: ${daysForDelivery}
+          Entrega em casa: ${deliver_home}
+          Entrega aos sábados: ${deliver_saturday}
+          Observações: ${obs}
         `
       })
         .then(() => console.log('Successful share'))
@@ -48,13 +42,16 @@ const FareResult: NextPage<FareProps> = ({ query }) => {
   }
 
   useEffect(() => {
-    setDaysForDelivery(query.days_for_delivery)
-    setDeliverHome(query.deliver_home)
-    setDeliverSaturday(query.deliver_saturday)
-    setObs(query.obs)
-    setPrice(query.price)
-    setService(query.service)
-  }, [query])
+    const result = localStorage.getItem('fareResult')
+    const resultObject:FareProps = JSON.parse(result)
+
+    setDaysForDelivery(resultObject.days_for_delivery)
+    setDeliverHome(resultObject.deliver_home)
+    setDeliverSaturday(resultObject.deliver_saturday)
+    setObs(resultObject.obs)
+    setPrice(resultObject.price)
+    setService(resultObject.service)
+  }, [])
 
   return (
     <div className={`${styles.fare_result} container`}>
@@ -69,7 +66,7 @@ const FareResult: NextPage<FareProps> = ({ query }) => {
         <img src='../assets/images/logo.svg' alt="GoCorreios" />
         <p className={styles.text}>Calculo de Frete - Resultado</p>
       </div>
-      {navigator.share &&
+      {global.navigator && global.navigator.share &&
         <button className={styles.button_share} onClick={handleShare}>
           Compartilhar
         </button>}
@@ -111,12 +108,4 @@ const FareResult: NextPage<FareProps> = ({ query }) => {
   )
 }
 
-export default withRouter(FareResult)
-
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  return {
-    props: {
-      query,
-    },
-  };
-};
+export default FareResult
