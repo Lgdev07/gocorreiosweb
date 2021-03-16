@@ -44,6 +44,20 @@
   padding: 1rem;
 }
 
+.result_container:nth-child(2) {
+  padding: 0.2rem;
+}
+
+.result_container:nth-child(n+3) {
+  margin-top: 3rem;
+}
+
+.result_object_title {
+  color: var(--color-background);
+  font: 700 2rem Lato;
+  margin: 2rem 0;
+}
+
 .result_value {
   display: grid;
   grid-template-columns: 1fr 1fr;

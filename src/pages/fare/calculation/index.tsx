@@ -31,7 +31,8 @@ const Calculation = () => {
     try {
       setLoading(true)
       const result = await api.post('/fares', data)
-      localStorage.setItem('fareResult', JSON.stringify(result.data))
+      const mergedObj = {...result.data, ...data}
+      localStorage.setItem('fareResult', JSON.stringify(mergedObj))
       router.push({
         pathname: '/fare/result'
       })

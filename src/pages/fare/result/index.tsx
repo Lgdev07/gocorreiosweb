@@ -1,39 +1,39 @@
 import { useEffect, useState } from 'react'
-import { GetServerSideProps, NextPage } from 'next'
+import { NextPage } from 'next'
 import Link from 'next/link'
-import { NextRouter, withRouter } from 'next/router'
 
 import styles from './Result.module.css'
 import Head from 'next/head'
 
 interface FareProps {
-  days_for_delivery: string
-  deliver_home: string
-  deliver_saturday: string
-  obs: string
-  price: string
-  service: string
+  days_for_delivery?: string
+  deliver_home?: string
+  deliver_saturday?: string
+  obs?: string
+  price?: string
+  service?: string
+  cep_origin?: string
+  cep_destination?: string
+  weight?: string
+  lenght?: string
+  height?: string
+  width?: string
 }
 
 const FareResult: NextPage<FareProps> = () => {
-  const [daysForDelivery, setDaysForDelivery] = useState('')
-  const [deliver_home, setDeliverHome] = useState('')
-  const [deliver_saturday, setDeliverSaturday] = useState('')
-  const [obs, setObs] = useState('')
-  const [price, setPrice] = useState('')
-  const [service, setService] = useState('')
+  const [result, setResult] = useState<FareProps>({})
 
   const handleShare = async () => {
     if (navigator.share) {
       navigator.share({
-        title: 'Resultado Frete',
+        title: `Resultado Frete de ${result.cep_origin} para ${result.cep_destination}`,
         text: `
-          Preço: ${price}
-          Serviço: ${service}
-          Dias para entrega: ${daysForDelivery}
-          Entrega em casa: ${deliver_home}
-          Entrega aos sábados: ${deliver_saturday}
-          Observações: ${obs}
+        Preço: ${result.price}
+        Serviço: ${result.service}
+        Dias para entrega: ${result.days_for_delivery}
+        Entrega em casa: ${result.deliver_home}
+        Entrega aos sábados: ${result.deliver_saturday}
+        Observações: ${result.obs}
         `
       })
         .then(() => console.log('Successful share'))
@@ -45,12 +45,7 @@ const FareResult: NextPage<FareProps> = () => {
     const result = localStorage.getItem('fareResult')
     const resultObject:FareProps = JSON.parse(result)
 
-    setDaysForDelivery(resultObject.days_for_delivery)
-    setDeliverHome(resultObject.deliver_home)
-    setDeliverSaturday(resultObject.deliver_saturday)
-    setObs(resultObject.obs)
-    setPrice(resultObject.price)
-    setService(resultObject.service)
+    setResult(resultObject)
   }, [])
 
   return (
@@ -64,43 +59,80 @@ const FareResult: NextPage<FareProps> = () => {
         </Link>
 
         <img src='../assets/images/logo.svg' alt="GoCorreios" />
-        <p className={styles.text}>Calculo de Frete - Resultado</p>
+        <p className={styles.text}>Cálculo de Frete - Resultado</p>
       </div>
       {global.navigator && global.navigator.share &&
         <button className={styles.button_share} onClick={handleShare}>
           Compartilhar
         </button>}
+
+      <div className={styles.result_container}>
+        <div className={styles.result_value}>
+          <p>De</p>
+          <p>Para</p>
+          <p>{result.cep_origin}</p>
+          <p>{result.cep_destination}</p>
+        </div>
+      </div>
+
       <div className={styles.result_container}>
         <div className={styles.result_value}>
           <p>Preço</p>
-          <p>R$ {price}</p>
+          <p>R$ {result.price}</p>
         </div>
         <div className={styles.separator}/>
         <div className={styles.result_value}>
           <p>Serviço</p>
-          <p>{service}</p>
+          <p>{result.service}</p>
         </div>
         <div className={styles.separator}/>
         <div className={styles.result_value}>
           <p>Dias para entrega</p>
-          <p>{daysForDelivery}</p>
+          <p>{result.days_for_delivery}</p>
         </div>
         <div className={styles.separator}/>
         <div className={styles.result_value}>
           <p>Entrega em casa</p>
-          <p>{deliver_home === "N" ? "Não" : "Sim"}</p>
+          <p>{result.deliver_home === "N" ? "Não" : "Sim"}</p>
         </div>
         <div className={styles.separator}/>
         <div className={styles.result_value}>
           <p>Entrega aos sábados</p>
-          <p>{deliver_saturday === "N" ? "Não" : "Sim"}</p>
+          <p>{result.deliver_saturday === "N" ? "Não" : "Sim"}</p>
         </div>
         <div className={styles.separator}/>
         <div className={`${styles.result_value} ${styles.observations}`}>
           <p>Observações</p>
-          <p>{obs}</p>
+          <p>{result.obs}</p>
         </div>
       </div>
+
+      <div className={styles.result_container}>
+        <div className={styles.result_object_title}>
+          <p>Detalhes do Objeto</p>
+        </div>
+        <div className={styles.separator}/>
+        <div className={styles.result_value}>
+          <p>Peso</p>
+          <p>{result.weight}</p>
+        </div>
+        <div className={styles.separator}/>
+        <div className={styles.result_value}>
+          <p>Comprimento</p>
+          <p>{result.lenght}</p>
+        </div>
+        <div className={styles.separator}/>
+        <div className={styles.result_value}>
+          <p>Altura</p>
+          <p>{result.height}</p>
+        </div>
+        <div className={styles.separator}/>
+        <div className={styles.result_value}>
+          <p>Largura</p>
+          <p>{result.width}</p>
+        </div>
+      </div>
+
       <footer>
         <p>Feito por <a href="https://github.com/Lgdev07"><b>Luan Gomes</b></a></p>
       </footer>
