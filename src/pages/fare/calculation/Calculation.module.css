@@ -83,3 +83,13 @@
   font: 1.6rem Lato;
   color: var(--color-background);
 }
+
+.errorMessage {
+  color: #fbd700;
+  font-weight: bold;
+  max-height: 35px;
+}
+
+.inputError {
+  border: 4px solid #fbd700 !important;
+}
