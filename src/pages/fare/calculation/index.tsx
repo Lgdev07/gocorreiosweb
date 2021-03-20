@@ -24,7 +24,7 @@ interface FareProps {
 
 const Calculation = () => {
   const router = useRouter()
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm<FareProps>();
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: FareProps) => {
@@ -76,21 +76,27 @@ const Calculation = () => {
       />
 
       <Input
+        className={errors.cep_origin && styles.inputError}
         name="cep_origin"
         label="Cep origem"
         defaultValue="09981380"
         register={register}
         required
       />
+      {errors.cep_origin && <span className={styles.errorMessage}>Cep origem é obrigatório</span>}
+
       <Input
+        className={errors.cep_destination && styles.inputError}
         name="cep_destination"
         label="Cep destino"
         register={register}
         required
       />
+      {errors.cep_destination && <span className={styles.errorMessage}>Cep destino é obrigatório</span>}
 
       <div className={styles.bottom_input}>
         <Input
+          className={errors.weight && styles.inputError}
           name="weight"
           label="Peso(em Kg)"
           type="number"
@@ -98,7 +104,9 @@ const Calculation = () => {
           register={register}
           required
         />
+
         <Input
+          className={errors.lenght && styles.inputError}
           name="lenght"
           type="number"
           defaultValue="15"
@@ -106,7 +114,9 @@ const Calculation = () => {
           register={register}
           required
         />
+
         <Input
+          className={errors.height && styles.inputError}
           name="height"
           type="number"
           defaultValue="15"
@@ -114,7 +124,9 @@ const Calculation = () => {
           register={register}
           required
         />
+
         <Input
+          className={errors.width && styles.inputError}
           name="width"
           type="number"
           defaultValue="18"
