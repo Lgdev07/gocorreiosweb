@@ -8,6 +8,7 @@ import styles from './Calculation.module.css'
 
 import Input from '../../../components/Input'
 import Select from '../../../components/Select';
+import Modal from '../../../components/Modal';
 import { useForm } from 'react-hook-form';
 import api from '../../../services/api'
 import Head from 'next/head'
@@ -25,10 +26,12 @@ interface FareProps {
 const Calculation = () => {
   const router = useRouter()
   const { register, handleSubmit, errors } = useForm<FareProps>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [requestError, setRequestError] = useState<string>('');
 
   const onSubmit = async (data: FareProps) => {
     try {
+      setRequestError('')
       setLoading(true)
       const result = await api.post('/fares', data)
       const mergedObj = {...result.data, ...data}
@@ -36,9 +39,10 @@ const Calculation = () => {
       router.push({
         pathname: '/fare/result'
       })
-    } catch {
+    } catch (err) {
+      const errorMessage = err.response.data["error"]
       setLoading(false)
-      alert("Erro ao calcular, tente novamente")
+      setRequestError(errorMessage)
     }
   }
 
@@ -47,6 +51,7 @@ const Calculation = () => {
       <Head>
         <title>GoCorreios - Cálculo de Frete</title>
       </Head>
+
       <div className={styles.logo_container}>
         <Link href="/">
           <a>
@@ -57,6 +62,8 @@ const Calculation = () => {
         <img src='../assets/images/logo.svg' alt="GoCorreios" />
         <p className={styles.text}>Cálculo de Frete</p>
       </div>
+
+      {requestError && <Modal message={requestError}/>}
 
       {loading &&
         <div className={styles.loading}>
