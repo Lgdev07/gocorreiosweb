@@ -40,7 +40,7 @@ const Calculation = () => {
         pathname: '/fare/result'
       })
     } catch (err) {
-      const errorMessage = err.response.data["error"]
+      const errorMessage = (err.response && err.response.data["error"]) || "Erro ao calcular, por favor tente mais tarde"
       setLoading(false)
       setRequestError(errorMessage)
     }
